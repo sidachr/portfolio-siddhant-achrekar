@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siddhant Achrekar — Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #f5f5f0;
+      --bg2:       #ebebе6;
+      --border:    #d8d8d0;
+      --accent:    #ce1141;
+      --accent2:   #6b2d8b;
+      --text:      #1a1a1a;
+      --muted:     #555550;
+      --card:      #eeede8;
+      --font-sans: 'Space Grotesk', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(245,245,240,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .nav-links { display: flex; gap: 2.5rem; }
+    .nav-links a {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    #home {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+    .hero-name span { color: var(--accent); }
+    .hero-title {
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--accent); color: #ffffff; }
+    .btn-primary:hover { background: #a80d33; }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    #home::before {
+      content: '';
+      position: absolute; inset: 0; z-index: -1;
+      background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.3;
+    }
+    #home::after {
+      content: '';
+      position: absolute; bottom: -100px; right: -100px; z-index: -1;
+      width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(206,17,65,0.06) 0%, transparent 70%);
+    }
+
+    /* TICKER */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.9rem 0;
+      background: var(--bg2);
+    }
+    .ticker-track {
+      display: flex; gap: 3rem;
+      width: max-content;
+      animation: ticker 30s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      white-space: nowrap;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .ticker-item .dot { color: var(--accent); margin-right: 0.75rem; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 6rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+      max-width: 700px;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
+    }
+    .about-text p strong { color: var(--text); font-weight: 600; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+    .stat-card .label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.25rem;
+    }
+
+    /* EXPERIENCE */
+    .experience-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .exp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: border-color 0.2s;
+    }
+    .exp-card:hover { border-color: var(--accent2); }
+    .exp-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+    .exp-company { font-size: 1.15rem; font-weight: 700; }
+    .exp-year {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      background: rgba(206,17,65,0.08);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(206,17,65,0.25);
+    }
+    .exp-role { font-size: 0.85rem; color: var(--accent2); margin-bottom: 1rem; font-weight: 500; }
+    .exp-bullets li {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding-left: 1.25rem;
+      position: relative;
+      margin-bottom: 0.4rem;
+      line-height: 1.7;
+    }
+    .exp-bullets li::before {
+      content: '▸';
+      position: absolute; left: 0;
+      color: var(--accent);
+      font-size: 0.7rem;
+      top: 0.35rem;
+    }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 1.25rem;
+    }
+    .project-link {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* SKILLS TICKER */
+    .skills-section { padding: 6rem 0; overflow: hidden; }
+    .skills-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding: 0 4rem;
+    }
+    .skills-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+      padding: 0 4rem;
+    }
+    .skills-row { margin-bottom: 1rem; }
+    .skills-track {
+      display: flex; gap: 1rem;
+      width: max-content;
+      animation: ticker 22s linear infinite;
+    }
+    .skills-row:nth-child(odd) .skills-track { animation-direction: reverse; }
+    .skill-pill {
+      white-space: nowrap;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.5rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+    }
+    .skill-pill.accent { border-color: rgba(206,17,65,0.35); color: var(--accent); }
+    .skill-pill.accent2 { border-color: rgba(107,45,139,0.35); color: var(--accent2); }
+
+    /* EDUCATION */
+    .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+    }
+    .edu-school { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .edu-degree { font-size: 0.85rem; color: var(--accent2); margin-bottom: 1rem; font-weight: 500; }
+    .edu-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .course-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+
+    /* CONTACT */
+    #contact { text-align: center; padding: 7rem 4rem; }
+    #contact .section-label { display: block; }
+    .contact-headline {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    .contact-sub {
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+    .contact-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+    .contact-link {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      display: flex; align-items: center; gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #home, section { padding: 6rem 1.5rem 3rem; }
+      .about-grid, .edu-grid { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">// siddhant.dev</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="home">
+    <p class="hero-eyebrow">&#9654; Based in San Diego, CA &nbsp;·&nbsp; Open to opportunities</p>
+    <h1 class="hero-name">Siddhant<br /><span>Achrekar</span></h1>
+    <p class="hero-title">Software Developer · CS Graduate · SDSU '26</p>
+    <p class="hero-desc">
+      Full-stack mindset, broad skill set. I love to code, learn fast, and bring the same focus to every layer of a project. From systems and data to interfaces and logic, I adapt to what the work needs and see it through. Driven by curiosity and a genuine interest in building software that matters.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item"><span class="dot">▸</span>Python</span>
+      <span class="ticker-item"><span class="dot">▸</span>Java</span>
+      <span class="ticker-item"><span class="dot">▸</span>JavaScript</span>
+      <span class="ticker-item"><span class="dot">▸</span>Swift</span>
+      <span class="ticker-item"><span class="dot">▸</span>SQL</span>
+      <span class="ticker-item"><span class="dot">▸</span>Machine Learning</span>
+      <span class="ticker-item"><span class="dot">▸</span>ArcGIS</span>
+      <span class="ticker-item"><span class="dot">▸</span>iOS Dev</span>
+      <span class="ticker-item"><span class="dot">▸</span>AI</span>
+      <span class="ticker-item"><span class="dot">▸</span>C++</span>
+      <span class="ticker-item"><span class="dot">▸</span>Python</span>
+      <span class="ticker-item"><span class="dot">▸</span>Java</span>
+      <span class="ticker-item"><span class="dot">▸</span>JavaScript</span>
+      <span class="ticker-item"><span class="dot">▸</span>Swift</span>
+      <span class="ticker-item"><span class="dot">▸</span>SQL</span>
+      <span class="ticker-item"><span class="dot">▸</span>Machine Learning</span>
+      <span class="ticker-item"><span class="dot">▸</span>ArcGIS</span>
+      <span class="ticker-item"><span class="dot">▸</span>iOS Dev</span>
+      <span class="ticker-item"><span class="dot">▸</span>AI</span>
+      <span class="ticker-item"><span class="dot">▸</span>C++</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">&#9679; About</p>
+    <h2 class="section-title">Builder. Problem-solver.<br />Lifelong learner.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a <strong>Computer Science graduate from SDSU</strong> with a broad technical foundation and a habit of building things that solve real problems.
+        </p>
+        <p>
+          My background spans multiple programming languages and touches on machine learning, mobile development, data science, and software systems.
+        </p>
+        <p>
+          Outside of code, I have a track record of collaborative team projects and community leadership.
+        </p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="num">5+</div>
+          <div class="label">Languages</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">4+</div>
+          <div class="label">Projects Built</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">2yr</div>
+          <div class="label">IT Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">2026</div>
+          <div class="label">Graduated</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">&#9679; Experience</p>
+    <h2 class="section-title">Where I've worked.</h2>
+    <div class="experience-list">
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <span class="exp-company">Extended Stay Suites — AA Circle Investments LLC</span>
+          <span class="exp-year">Jun 2022 – May 2024</span>
+        </div>
+        <div class="exp-role">IT Support Technician · Albuquerque, NM</div>
+        <ul class="exp-bullets">
+          <li>Provided technical support and troubleshooting for hotel staff and guests across hardware, software, and network systems.</li>
+          <li>Maintained and configured computers, printers, and peripheral devices throughout hotel facilities; documented issues and resolutions for ongoing IT operations.</li>
+          <li>Diagnosed and resolved IT support requests efficiently to minimize operational downtime, and managed network infrastructure to ensure stable connectivity across guest and staff systems.</li>
+          <li>Supported front desk operations including guest check-in/check-out, handling inquiries, and delivering a seamless guest experience.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">Hardware</span>
+          <span class="tag">Networking</span>
+          <span class="tag">Troubleshooting</span>
+          <span class="tag">IT Support</span>
+        </div>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <span class="exp-company">SDSU AI Club</span>
+          <span class="exp-year">Nov 2024 – Jan 2026</span>
+        </div>
+        <div class="exp-role">Member · San Diego, CA</div>
+        <ul class="exp-bullets">
+          <li>Member of a student-run AI/ML organization at San Diego State University focused on real-world applications of artificial intelligence and machine learning.</li>
+          <li>Collaborated in teams to develop projects including a YouTube Voice Recognition &amp; Captioning tool.</li>
+        </ul>
+        <div class="exp-tags">
+          <span class="tag">AI/ML</span>
+          <span class="tag">Python</span>
+          <span class="tag">Team Projects</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-label">&#9679; Projects</p>
+    <h2 class="section-title">Things I've built.</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <h3 class="project-title">AI Sleep Quality &amp; Schedule Optimizer</h3>
+        <p class="project-desc">An AI-powered sleep tracker in Python that analyzes personal sleep patterns — bedtime, wake time, duration, and naps — to predict sleep quality and recommend optimal schedules. Includes visualizations to support cognitive performance and energy management.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Python</span>
+          <span class="tag">AI</span>
+          <span class="tag">Data Visualization</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3 class="project-title">Calorie Tracker Desktop App</h3>
+        <p class="project-desc">A Python desktop application for meal logging and daily calorie reporting with persistent session storage. Designed with usability in mind to support simple, accessible dietary monitoring.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Python</span>
+          <span class="tag">Desktop App</span>
+          <span class="tag">UX Design</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3 class="project-title">iOS To-Do List App</h3>
+        <p class="project-desc">A user-friendly iOS task management app built in Swift. Supports task creation, editing, deletion, categorization by deadline, and push notifications to keep users on track.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Swift</span>
+          <span class="tag">iOS</span>
+          <span class="tag">Xcode</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3 class="project-title">Web Mapping — ABQ Public Schools</h3>
+        <p class="project-desc">An interactive web mapping application built with ArcGIS Online to visualize Albuquerque Public Schools and nearby public facilities including parks, pools, and community centers. Helps students quickly locate the closest amenities.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">ArcGIS</span>
+          <span class="tag">GIS</span>
+          <span class="tag">Web Mapping</span>
+        </div>
+        <a href="https://arcg.is/yn5D0" class="project-link" target="_blank">↗ arcg.is/yn5D0</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <div class="skills-section" id="skills">
+    <p class="skills-label">&#9679; Skills</p>
+    <h2 class="skills-title">What I work with.</h2>
+
+    <div class="skills-row">
+      <div class="skills-track">
+        <span class="skill-pill accent">Python</span>
+        <span class="skill-pill accent">Java</span>
+        <span class="skill-pill accent">JavaScript</span>
+        <span class="skill-pill accent">C++</span>
+        <span class="skill-pill accent">C</span>
+        <span class="skill-pill accent">SQL</span>
+        <span class="skill-pill accent">Scala</span>
+        <span class="skill-pill accent">R</span>
+        <span class="skill-pill accent">Swift</span>
+        <span class="skill-pill accent">Python</span>
+        <span class="skill-pill accent">Java</span>
+        <span class="skill-pill accent">JavaScript</span>
+        <span class="skill-pill accent">C++</span>
+        <span class="skill-pill accent">C</span>
+        <span class="skill-pill accent">SQL</span>
+        <span class="skill-pill accent">Scala</span>
+        <span class="skill-pill accent">R</span>
+        <span class="skill-pill accent">Swift</span>
+      </div>
+    </div>
+
+    <div class="skills-row">
+      <div class="skills-track">
+        <span class="skill-pill accent2">Machine Learning</span>
+        <span class="skill-pill accent2">Artificial Intelligence</span>
+        <span class="skill-pill accent2">Data Science</span>
+        <span class="skill-pill accent2">iOS Development</span>
+        <span class="skill-pill accent2">GIS / ArcGIS</span>
+        <span class="skill-pill accent2">MATLAB</span>
+        <span class="skill-pill accent2">Unity</span>
+        <span class="skill-pill accent2">Machine Learning</span>
+        <span class="skill-pill accent2">Artificial Intelligence</span>
+        <span class="skill-pill accent2">Data Science</span>
+        <span class="skill-pill accent2">iOS Development</span>
+        <span class="skill-pill accent2">GIS / ArcGIS</span>
+        <span class="skill-pill accent2">MATLAB</span>
+        <span class="skill-pill accent2">Unity</span>
+      </div>
+    </div>
+
+    <div class="skills-row">
+      <div class="skills-track">
+        <span class="skill-pill">VS Code</span>
+        <span class="skill-pill">IntelliJ</span>
+        <span class="skill-pill">Xcode</span>
+        <span class="skill-pill">Linux</span>
+        <span class="skill-pill">Cursor</span>
+        <span class="skill-pill">RStudio</span>
+        <span class="skill-pill">AutoCAD</span>
+        <span class="skill-pill">Google Cloud</span>
+        <span class="skill-pill">VS Code</span>
+        <span class="skill-pill">IntelliJ</span>
+        <span class="skill-pill">Xcode</span>
+        <span class="skill-pill">Linux</span>
+        <span class="skill-pill">Cursor</span>
+        <span class="skill-pill">RStudio</span>
+        <span class="skill-pill">AutoCAD</span>
+        <span class="skill-pill">Google Cloud</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">&#9679; Education</p>
+    <h2 class="section-title">Where I studied.</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-school">San Diego State University</div>
+        <div class="edu-degree">B.S. Computer Science · Aug 2021 – May 2026</div>
+        <p class="edu-desc">Comprehensive CS curriculum covering algorithms, AI, machine learning, operating systems, computer security, database theory, game programming, and data science.</p>
+        <div class="course-tags">
+          <span class="tag">Algorithms</span>
+          <span class="tag">AI</span>
+          <span class="tag">Machine Learning</span>
+          <span class="tag">OS</span>
+          <span class="tag">Security</span>
+          <span class="tag">Data Science</span>
+          <span class="tag">Game Programming</span>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-school">Certifications</div>
+        <div class="edu-degree">Google Cloud · ESRI ArcGIS</div>
+        <p class="edu-desc">Google Cloud Computing Foundations, Google Cloud Data Analytics, ESRI ArcGIS Online Basics, and Getting Started with GIS.</p>
+        <div class="course-tags">
+          <span class="tag">Google Cloud</span>
+          <span class="tag">Data Analytics</span>
+          <span class="tag">ArcGIS</span>
+          <span class="tag">GIS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">&#9679; Contact</p>
+    <h2 class="contact-headline">Let's connect.</h2>
+    <p class="contact-sub">
+      Open to internships, new grad roles, and interesting projects.
+      I usually reply quickly — don't hesitate to reach out.
+    </p>
+    <div class="contact-links">
+      <a href="mailto:sdachrkr@gmail.com" class="contact-link">&#9993; sdachrkr@gmail.com</a>
+      <a href="https://www.linkedin.com/in/siddhantachrekar" class="contact-link" target="_blank">&#9654; LinkedIn</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>// Siddhant Achrekar</span>
+    <span>San Diego, CA · 2026</span>
+  </footer>
+
+</body>
+</html>
